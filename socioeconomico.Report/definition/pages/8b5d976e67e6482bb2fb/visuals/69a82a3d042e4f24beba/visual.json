@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "69a82a3d042e4f24beba",
   "position": {
-    "x": 158,
-    "y": 5,
-    "z": 1,
-    "height": 38,
-    "width": 1112,
+    "x": 157.4773109554352,
+    "y": 16.656254043363337,
+    "z": 0,
+    "height": 63.596606347387294,
+    "width": 1112.9406110792775,
     "tabOrder": 0
   },
   "visual": {
@@ -21,13 +21,12 @@
                   {
                     "value": "Perfil Socioeconômico dos Alunos — IRMR",
                     "textStyle": {
-                      "fontSize": "20px",
-                      "color": "#0D47A1",
-                      "fontWeight": "bold"
+                      "fontWeight": "bold",
+                      "fontSize": "20pt",
+                      "color": "#0d47a1"
                     }
                   }
-                ],
-                "horizontalTextAlignment": "left"
+                ]
               }
             ]
           }

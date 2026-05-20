@@ -4,5 +4,10 @@
   "displayName": "Perfil Socioeconômico",
   "displayOption": "FitToPage",
   "height": 720,
-  "width": 1280
+  "width": 1280,
+  "pageBinding": {
+    "name": "47fee3bd6f67f1880906",
+    "type": "Default",
+    "parameters": []
+  }
 }

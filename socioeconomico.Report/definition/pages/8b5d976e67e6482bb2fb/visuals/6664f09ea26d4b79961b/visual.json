@@ -4,10 +4,10 @@
   "position": {
     "x": 714,
     "y": 540,
-    "z": 10,
+    "z": 8000,
     "height": 172,
     "width": 556,
-    "tabOrder": 9
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "columnChart",
@@ -23,11 +23,11 @@
                       "Entity": "Alunos"
                     }
                   },
-                  "Property": "FaixaRenda"
+                  "Property": "FaixaEtaria"
                 }
               },
-              "queryRef": "Alunos.FaixaRenda",
-              "nativeQueryRef": "FaixaRenda",
+              "queryRef": "Alunos.FaixaEtaria",
+              "nativeQueryRef": "FaixaEtaria",
               "active": true
             }
           ]
@@ -42,11 +42,11 @@
                       "Entity": "Alunos"
                     }
                   },
-                  "Property": "TipoDeficiencia"
+                  "Property": "TipoInstituicao"
                 }
               },
-              "queryRef": "Alunos.TipoDeficiencia",
-              "nativeQueryRef": "TipoDeficiencia"
+              "queryRef": "Alunos.TipoInstituicao",
+              "nativeQueryRef": "TipoInstituicao"
             }
           ]
         },
@@ -60,14 +60,32 @@
                       "Entity": "_Medidas"
                     }
                   },
-                  "Property": "PctSobreTotal"
+                  "Property": "TotalAlunos"
                 }
               },
-              "queryRef": "_Medidas.PctSobreTotal",
-              "nativeQueryRef": "PctSobreTotal"
+              "queryRef": "_Medidas.TotalAlunos",
+              "nativeQueryRef": "TotalAlunos"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Medidas"
+                  }
+                },
+                "Property": "TotalAlunos"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
       }
     }
   }
