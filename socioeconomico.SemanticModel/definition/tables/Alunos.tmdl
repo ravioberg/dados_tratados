@@ -1,0 +1,144 @@
+table Alunos
+	lineageTag: 2844afb0-b1cc-432e-8520-4c27b7491217
+
+	column RecordID
+		dataType: int64
+		lineageTag: c0ea3b23-b934-4dcc-ab88-3d3b0fff8816
+		sourceColumn: RecordID
+
+	column NomeAluno
+		dataType: string
+		lineageTag: 45a55e06-ccee-4e14-b329-3672e019b4cb
+		sourceColumn: NomeAluno
+
+	column Status
+		dataType: string
+		lineageTag: 11869c48-e6ae-4607-9275-b60c05ea2888
+		sourceColumn: Status
+
+	column Sexo
+		dataType: string
+		lineageTag: 29e35742-f093-47d3-a4a7-233cc9b0b543
+		sourceColumn: Sexo
+
+	column Cor
+		dataType: string
+		lineageTag: 0334cda9-a2e3-4ad5-b6e1-04e9018b3c67
+		sourceColumn: Cor
+
+	column Idade
+		dataType: int64
+		lineageTag: 2dfc525e-fbd3-4013-975d-bff36acdecdf
+		sourceColumn: Idade
+
+	column FaixaEtaria
+		dataType: string
+		lineageTag: a08a95ba-5ca5-4ee1-85c2-299cc4694aa0
+		sourceColumn: FaixaEtaria
+
+	column FaixaEtariaOrdem
+		dataType: int64
+		lineageTag: 0b810fb8-5dbd-4eef-9216-5981d6940505
+		sourceColumn: FaixaEtariaOrdem
+
+	column FaixaRenda
+		dataType: string
+		lineageTag: c203e7b3-60de-4e0f-9ee2-e0249ad61b24
+		sourceColumn: FaixaRenda
+		sortByColumn: FaixaRendaOrdem
+
+	column FaixaRendaOrdem
+		dataType: int64
+		lineageTag: 343b1449-9fac-42d6-ac0a-d48e0e6b570f
+		sourceColumn: FaixaRendaOrdem
+
+	column RendaSM_Aprox
+		dataType: double
+		lineageTag: 804b645d-695d-4905-bae5-01fd21186085
+		sourceColumn: RendaSM_Aprox
+
+	column TipoInstituicao
+		dataType: string
+		lineageTag: a81047cc-16e4-4d4e-babb-d44a175f675e
+		sourceColumn: TipoInstituicao
+
+	column NivelEnsino
+		dataType: string
+		lineageTag: d43a5667-0676-47bc-b1b6-bb405e4cbd68
+		sourceColumn: NivelEnsino
+
+	column AnoEscolar
+		dataType: string
+		lineageTag: 0b35df4b-f7c2-4d4c-8be4-c90fdaf9cd97
+		sourceColumn: AnoEscolar
+		sortByColumn: AnoEscolarOrdem
+
+	column AnoEscolarOrdem
+		dataType: int64
+		lineageTag: 718be7a1-8b85-49eb-b291-bdb5ec5bd306
+		sourceColumn: AnoEscolarOrdem
+
+	column DeficienciaFisica
+		dataType: boolean
+		lineageTag: 42b31439-7f75-4206-b78a-4396b09b68f0
+		sourceColumn: DeficienciaFisica
+
+	column DeficienciaIntelectual
+		dataType: boolean
+		lineageTag: c55a8020-422c-4a01-a1ea-e0364811ae1f
+		sourceColumn: DeficienciaIntelectual
+
+	column SemDeficiencia
+		dataType: boolean
+		lineageTag: 20ee3ef1-3914-44dc-b30d-1b6ac288ee2c
+		sourceColumn: SemDeficiencia
+
+	column DiagnosticoDiferenciado
+		dataType: boolean
+		lineageTag: 18376624-555f-419c-9722-96b4deb9fa0b
+		sourceColumn: DiagnosticoDiferenciado
+
+	column DiagnosticoPrincipal
+		dataType: string
+		lineageTag: 143e46d1-441d-4d48-b188-c71663b47f67
+		sourceColumn: DiagnosticoPrincipal
+
+	column DiagnosticoAgrupado
+		dataType: string
+		lineageTag: da6f01db-6db7-4d76-820f-1acc4463baeb
+		sourceColumn: DiagnosticoAgrupado
+
+	partition Alunos = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\roberg\OneDrive - Alvarez and Marsal\Desktop\Projeto em Ciência de Dados III\AP1 Projeto 3\dados_tratados\alunos_perfil_limpo.csv"), [Delimiter=",", Columns=21, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Types" = Table.TransformColumnTypes(#"Promoted Headers", {
+				        {"RecordID", Int64.Type},
+				        {"NomeAluno", type text},
+				        {"Status", type text},
+				        {"Sexo", type text},
+				        {"Cor", type text},
+				        {"Idade", Int64.Type},
+				        {"FaixaEtaria", type text},
+				        {"FaixaEtariaOrdem", Int64.Type},
+				        {"FaixaRenda", type text},
+				        {"FaixaRendaOrdem", Int64.Type},
+				        {"RendaSM_Aprox", type number},
+				        {"TipoInstituicao", type text},
+				        {"NivelEnsino", type text},
+				        {"AnoEscolar", type text},
+				        {"AnoEscolarOrdem", Int64.Type},
+				        {"DeficienciaFisica", type logical},
+				        {"DeficienciaIntelectual", type logical},
+				        {"SemDeficiencia", type logical},
+				        {"DiagnosticoDiferenciado", type logical},
+				        {"DiagnosticoPrincipal", type text},
+				        {"DiagnosticoAgrupado", type text}
+				    })
+				in
+				    #"Changed Types"
+
+	annotation PBI_ResultType = Table
+

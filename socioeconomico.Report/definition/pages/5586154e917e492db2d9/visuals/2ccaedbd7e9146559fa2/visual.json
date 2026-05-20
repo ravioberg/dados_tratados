@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "2ccaedbd7e9146559fa2",
+  "position": {
+    "x": 158,
+    "y": 80,
+    "z": 3,
+    "height": 85,
+    "width": 220,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "AlunosBaixaRenda"
+                }
+              },
+              "queryRef": "_Medidas.AlunosBaixaRenda",
+              "nativeQueryRef": "AlunosBaixaRenda"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

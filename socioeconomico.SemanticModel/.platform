@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "socioeconomico"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "b9cd2ec7-004c-41dd-bdc8-87496c475a2a"
+  }
+}

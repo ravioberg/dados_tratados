@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "94c297f6d1fd4149a2d1",
+  "position": {
+    "x": 5,
+    "y": 466,
+    "z": 13,
+    "height": 130,
+    "width": 148,
+    "tabOrder": 12
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alunos"
+                    }
+                  },
+                  "Property": "FaixaEtaria"
+                }
+              },
+              "queryRef": "Alunos.FaixaEtaria",
+              "nativeQueryRef": "FaixaEtaria",
+              "active": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}

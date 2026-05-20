@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Start-Process $pbixPath)",
+      "PowerShell($pbixPath = \"c:\\\\Users\\\\roberg\\\\OneDrive - Alvarez and Marsal\\\\Desktop\\\\Projeto em Ci�ncia de Dados III\\\\AP1 Projeto 3\\\\dados_tratados\\\\dashboard_socioeconomico.pbix\")",
+      "PowerShell(python $script)",
+      "PowerShell($script = \"C:\\\\Users\\\\roberg\\\\OneDrive - Alvarez and Marsal\\\\Desktop\\\\Projeto em Ci�ncia de Dados III\\\\AP1 Projeto 3\\\\dados_tratados\\\\criar_novo_pbix.py\")"
+    ]
+  }
+}

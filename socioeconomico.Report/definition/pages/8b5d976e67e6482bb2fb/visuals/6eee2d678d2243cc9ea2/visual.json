@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "6eee2d678d2243cc9ea2",
+  "position": {
+    "x": 158,
+    "y": 540,
+    "z": 9,
+    "height": 172,
+    "width": 546,
+    "tabOrder": 8
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alunos"
+                    }
+                  },
+                  "Property": "AnoEscolar"
+                }
+              },
+              "queryRef": "Alunos.AnoEscolar",
+              "nativeQueryRef": "AnoEscolar",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "TotalAlunos"
+                }
+              },
+              "queryRef": "_Medidas.TotalAlunos",
+              "nativeQueryRef": "TotalAlunos"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

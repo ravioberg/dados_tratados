@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "d6b59adb76c74cd4a06d",
+  "position": {
+    "x": 158,
+    "y": 45,
+    "z": 2,
+    "height": 26,
+    "width": 1112,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Distribuição por renda, instituição e escolaridade  ·  n = 143",
+                    "textStyle": {
+                      "fontSize": "11px",
+                      "color": "#616161"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
