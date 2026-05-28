@@ -1,45 +1,51 @@
 table _Medidas
-	lineageTag: 6dad1c2b-69fb-4934-bece-a45ffa120b32
+	lineageTag: 9328caa6-d98e-4619-96f3-0c39bf7a54a2
 
 	measure TotalAlunos = COUNTROWS(Alunos)
+		lineageTag: 2af9734b-39ef-49e8-9def-692799d67bf0
 		formatString: #,0
-		lineageTag: 048147be-0434-4a58-bd90-a66d1d214e7f
 
 	measure AlunosEscolaPublica = CALCULATE([TotalAlunos], Alunos[TipoInstituicao] = "Pública")
+		lineageTag: 41967a37-dafb-413a-b499-a90330eb494c
 		formatString: #,0
-		lineageTag: 58f66e4a-2f76-420e-a28c-705100a1f021
 
 	measure AlunosEscolaParticular = CALCULATE([TotalAlunos], Alunos[TipoInstituicao] = "Particular")
+		lineageTag: bca6d13f-9da7-4d02-a5a6-afdad1df1244
 		formatString: #,0
-		lineageTag: 56c0a1ea-d125-43a2-9c8e-48352dcdacd2
 
 	measure PctEscolaPublica = DIVIDE([AlunosEscolaPublica], [TotalAlunos])
+		lineageTag: 5725a261-1061-4f6b-9012-f037b7d034c5
 		formatString: 0.0%
-		lineageTag: 6fbf4941-d463-44d6-b390-98c660c09ce2
 
 	measure RendaMediaSM = AVERAGE(Alunos[RendaSM_Aprox])
+		lineageTag: 8a532e4d-1bc6-4703-9cd5-425c0df085da
 		formatString: 0.0
-		lineageTag: 2cc402d0-abba-46a5-9044-dc70213f906d
 
 	measure AlunosBaixaRenda = CALCULATE([TotalAlunos], Alunos[FaixaRendaOrdem] <= 3)
+		lineageTag: 8abe1b27-eefe-41b3-804d-96766b390d0f
 		formatString: #,0
-		lineageTag: 1b4c59e9-f926-4fb4-9879-7f32339186f3
 
 	measure PctBaixaRenda = DIVIDE([AlunosBaixaRenda], [TotalAlunos])
+		lineageTag: 678f17d1-7709-4a65-aaf7-7a066ffb89c1
 		formatString: 0.0%
-		lineageTag: 01adc179-86b3-460a-87eb-1f1e03011537
 
 	measure PctSobreTotal = DIVIDE([TotalAlunos], CALCULATE([TotalAlunos], ALL(Alunos)))
+		lineageTag: 2fe2290f-7a5b-4462-a3cf-cf7601bcfb2d
 		formatString: 0.0%
-		lineageTag: c4ae9ee5-0f34-42bb-a073-4276783f8e9c
 
-	column Value
-		lineageTag: a4d3dba8-7247-469c-8faf-5857bfd92856
-		isNameInferred
-		sourceColumn: [Value]
+	measure TotalComDeficiencia = CALCULATE([TotalAlunos], Alunos[TipoDeficiencia] <> "Sem Deficiência")
+		lineageTag: b170ffd1-376e-4817-89c4-155bb16136f1
+		formatString: #,0
+
+	measure PctDeficienciaFisica = DIVIDE(CALCULATE([TotalAlunos], Alunos[TipoDeficiencia] = "Deficiência Física"), [TotalAlunos])
+		lineageTag: 8c41d85b-56a5-49b4-ac3a-9f5e26fb6ef9
+		formatString: 0.0%
+
+	measure PctDeficienciaIntelectual = DIVIDE(CALCULATE([TotalAlunos], Alunos[TipoDeficiencia] = "Deficiência Intelectual"), [TotalAlunos])
+		lineageTag: e94d9683-ab02-46b7-ad0e-1e9414ac432b
+		formatString: 0.0%
 
 	partition _Medidas = calculated
 		source = {""}
 
-	annotation PBI_Id = d464c953-889f-4bd4-96b3-a73d7bcd8c81
-
+	annotation PBI_Id = fd8de234-93b3-4ad1-b3d9-67ed58da84de

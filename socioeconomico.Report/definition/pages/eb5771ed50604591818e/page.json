@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "eb5771ed50604591818e",
+  "displayName": "Deficiências e Diagnósticos",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

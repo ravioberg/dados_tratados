@@ -1,0 +1,74 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "08f3cbb59f204298929a",
+  "position": {
+    "x": 718,
+    "y": 440,
+    "z": 14,
+    "height": 258,
+    "width": 552,
+    "tabOrder": 13
+  },
+  "visual": {
+    "visualType": "columnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alunos"
+                    }
+                  },
+                  "Property": "FaixaRenda"
+                }
+              },
+              "queryRef": "Alunos.FaixaRenda",
+              "nativeQueryRef": "FaixaRenda",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alunos"
+                    }
+                  },
+                  "Property": "TipoDeficiencia"
+                }
+              },
+              "queryRef": "Alunos.TipoDeficiencia",
+              "nativeQueryRef": "TipoDeficiencia"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "TotalAlunos"
+                }
+              },
+              "queryRef": "_Medidas.TotalAlunos",
+              "nativeQueryRef": "TotalAlunos"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

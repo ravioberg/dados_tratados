@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "3b1effe2cfa940a0a4f5",
+  "position": {
+    "x": 5,
+    "y": 385,
+    "z": 4,
+    "height": 155,
+    "width": 148,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alunos"
+                    }
+                  },
+                  "Property": "FaixaRenda"
+                }
+              },
+              "queryRef": "Alunos.FaixaRenda",
+              "nativeQueryRef": "FaixaRenda",
+              "active": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}

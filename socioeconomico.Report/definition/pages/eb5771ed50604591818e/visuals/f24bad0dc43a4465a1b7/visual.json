@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "f24bad0dc43a4465a1b7",
+  "position": {
+    "x": 848,
+    "y": 70,
+    "z": 11,
+    "height": 360,
+    "width": 422,
+    "tabOrder": 10
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alunos"
+                    }
+                  },
+                  "Property": "TipoDeficiencia"
+                }
+              },
+              "queryRef": "Alunos.TipoDeficiencia",
+              "nativeQueryRef": "TipoDeficiencia",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "TotalAlunos"
+                }
+              },
+              "queryRef": "_Medidas.TotalAlunos",
+              "nativeQueryRef": "TotalAlunos"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

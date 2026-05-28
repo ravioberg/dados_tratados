@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "146956cc598a440ebb12",
+  "position": {
+    "x": 5,
+    "y": 225,
+    "z": 12,
+    "height": 85,
+    "width": 148,
+    "tabOrder": 11
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alunos"
+                    }
+                  },
+                  "Property": "TipoInstituicao"
+                }
+              },
+              "queryRef": "Alunos.TipoInstituicao",
+              "nativeQueryRef": "TipoInstituicao",
+              "active": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}

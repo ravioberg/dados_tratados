@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "4fd98c124d584e8fb502",
+  "position": {
+    "x": 158,
+    "y": 70,
+    "z": 8,
+    "height": 85,
+    "width": 220,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "TotalComDeficiencia"
+                }
+              },
+              "queryRef": "_Medidas.TotalComDeficiencia",
+              "nativeQueryRef": "TotalComDeficiencia"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

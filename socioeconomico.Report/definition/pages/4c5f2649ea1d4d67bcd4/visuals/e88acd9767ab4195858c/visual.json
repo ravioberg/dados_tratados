@@ -1,0 +1,74 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "e88acd9767ab4195858c",
+  "position": {
+    "x": 714,
+    "y": 540,
+    "z": 10,
+    "height": 172,
+    "width": 556,
+    "tabOrder": 9
+  },
+  "visual": {
+    "visualType": "columnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alunos"
+                    }
+                  },
+                  "Property": "FaixaEtaria"
+                }
+              },
+              "queryRef": "Alunos.FaixaEtaria",
+              "nativeQueryRef": "FaixaEtaria",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alunos"
+                    }
+                  },
+                  "Property": "TipoInstituicao"
+                }
+              },
+              "queryRef": "Alunos.TipoInstituicao",
+              "nativeQueryRef": "TipoInstituicao"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "TotalAlunos"
+                }
+              },
+              "queryRef": "_Medidas.TotalAlunos",
+              "nativeQueryRef": "TotalAlunos"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

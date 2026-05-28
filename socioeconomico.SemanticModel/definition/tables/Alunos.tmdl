@@ -1,120 +1,263 @@
 table Alunos
-	lineageTag: 2844afb0-b1cc-432e-8520-4c27b7491217
+	lineageTag: 31fcbe12-a80c-4788-aeb1-19d8af536111
 
 	column RecordID
 		dataType: int64
-		lineageTag: c0ea3b23-b934-4dcc-ab88-3d3b0fff8816
+		lineageTag: 38db2371-87b7-4c70-addc-bfec1680a330
 		sourceColumn: RecordID
 
 	column NomeAluno
 		dataType: string
-		lineageTag: 45a55e06-ccee-4e14-b329-3672e019b4cb
+		lineageTag: 7c4c5eff-4734-45ab-afcf-eb3d31e44098
 		sourceColumn: NomeAluno
 
 	column Status
 		dataType: string
-		lineageTag: 11869c48-e6ae-4607-9275-b60c05ea2888
+		lineageTag: 533a92a6-a2d4-4c8c-ab37-48e2b0eb5a3e
 		sourceColumn: Status
 
 	column Sexo
 		dataType: string
-		lineageTag: 29e35742-f093-47d3-a4a7-233cc9b0b543
+		lineageTag: 673f18fc-e659-4fa1-a688-414f30f8e082
 		sourceColumn: Sexo
 
 	column Cor
 		dataType: string
-		lineageTag: 0334cda9-a2e3-4ad5-b6e1-04e9018b3c67
+		lineageTag: de7ac92c-2c1e-4248-ae03-3f13fc000640
 		sourceColumn: Cor
 
 	column Idade
 		dataType: int64
-		lineageTag: 2dfc525e-fbd3-4013-975d-bff36acdecdf
+		lineageTag: dc0a72ea-c99c-45db-93ea-2e624f1e2746
 		sourceColumn: Idade
 
 	column FaixaEtaria
 		dataType: string
-		lineageTag: a08a95ba-5ca5-4ee1-85c2-299cc4694aa0
+		lineageTag: 519e0f98-337e-42d6-9b03-76024af638b2
 		sourceColumn: FaixaEtaria
+		sortByColumn: FaixaEtariaOrdem
 
 	column FaixaEtariaOrdem
 		dataType: int64
-		lineageTag: 0b810fb8-5dbd-4eef-9216-5981d6940505
+		lineageTag: 5013a8d5-d1e4-43f9-8099-93741f98bb3a
 		sourceColumn: FaixaEtariaOrdem
 
 	column FaixaRenda
 		dataType: string
-		lineageTag: c203e7b3-60de-4e0f-9ee2-e0249ad61b24
+		lineageTag: 55c05bee-62f9-4342-a087-85666b226597
 		sourceColumn: FaixaRenda
 		sortByColumn: FaixaRendaOrdem
 
 	column FaixaRendaOrdem
 		dataType: int64
-		lineageTag: 343b1449-9fac-42d6-ac0a-d48e0e6b570f
+		lineageTag: a1a899e3-4466-4b86-8e4c-3b55a2819bfc
 		sourceColumn: FaixaRendaOrdem
 
 	column RendaSM_Aprox
 		dataType: double
-		lineageTag: 804b645d-695d-4905-bae5-01fd21186085
+		lineageTag: 4804071a-8148-4690-ac87-f95e88174d55
 		sourceColumn: RendaSM_Aprox
 
 	column TipoInstituicao
 		dataType: string
-		lineageTag: a81047cc-16e4-4d4e-babb-d44a175f675e
+		lineageTag: b8279092-fd4a-4587-a341-ff875bc5b4f0
 		sourceColumn: TipoInstituicao
-
-	column NivelEnsino
-		dataType: string
-		lineageTag: d43a5667-0676-47bc-b1b6-bb405e4cbd68
-		sourceColumn: NivelEnsino
 
 	column AnoEscolar
 		dataType: string
-		lineageTag: 0b35df4b-f7c2-4d4c-8be4-c90fdaf9cd97
+		lineageTag: 5b86460b-a0ad-4c75-ba81-28d09138f90e
 		sourceColumn: AnoEscolar
 		sortByColumn: AnoEscolarOrdem
 
 	column AnoEscolarOrdem
 		dataType: int64
-		lineageTag: 718be7a1-8b85-49eb-b291-bdb5ec5bd306
+		lineageTag: 61bf32fd-bf53-4f59-9d0f-d37cee95bab0
 		sourceColumn: AnoEscolarOrdem
 
 	column DeficienciaFisica
 		dataType: boolean
-		lineageTag: 42b31439-7f75-4206-b78a-4396b09b68f0
+		lineageTag: 3e61305e-0e3a-472f-8c5f-e9769d3e3a72
 		sourceColumn: DeficienciaFisica
 
 	column DeficienciaIntelectual
 		dataType: boolean
-		lineageTag: c55a8020-422c-4a01-a1ea-e0364811ae1f
+		lineageTag: c4c38dd4-dad9-4353-baeb-9cea7bb075e3
 		sourceColumn: DeficienciaIntelectual
 
 	column SemDeficiencia
 		dataType: boolean
-		lineageTag: 20ee3ef1-3914-44dc-b30d-1b6ac288ee2c
+		lineageTag: cbf3e069-b0b1-4318-a3ed-25261e3da42d
 		sourceColumn: SemDeficiencia
 
 	column DiagnosticoDiferenciado
 		dataType: boolean
-		lineageTag: 18376624-555f-419c-9722-96b4deb9fa0b
+		lineageTag: c83e4f0f-a63f-403a-b959-c462b1306cf2
 		sourceColumn: DiagnosticoDiferenciado
 
-	column DiagnosticoPrincipal
+	column TipoDeficiencia
 		dataType: string
-		lineageTag: 143e46d1-441d-4d48-b188-c71663b47f67
-		sourceColumn: DiagnosticoPrincipal
+		lineageTag: 0a519006-359f-4f6f-b00b-d9cf22a9bb05
+		sourceColumn: TipoDeficiencia
 
-	column DiagnosticoAgrupado
+	column DoencaEspecifica
 		dataType: string
-		lineageTag: da6f01db-6db7-4d76-820f-1acc4463baeb
-		sourceColumn: DiagnosticoAgrupado
+		lineageTag: 75f99366-172a-460a-8e14-949746b7f0a2
+		sourceColumn: DoencaEspecifica
+
+	column DataSnapshot
+		dataType: dateTime
+		lineageTag: 56f7eb7c-4d1b-4da2-93ae-1d363d5b8043
+		sourceColumn: DataSnapshot
 
 	partition Alunos = m
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(File.Contents("C:\Users\roberg\OneDrive - Alvarez and Marsal\Desktop\Projeto em Ciência de Dados III\AP1 Projeto 3\dados_tratados\alunos_perfil_limpo.csv"), [Delimiter=",", Columns=21, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    #"Changed Types" = Table.TransformColumnTypes(#"Promoted Headers", {
+				    FolderPath = "C:\Users\roberg\OneDrive - Alvarez and Marsal\Desktop\Projeto em Ciência de Dados III\AP1 Projeto 3\dados_tratados",
+				    AllFiles = Folder.Files(FolderPath),
+				    PerfisFiles = Table.SelectRows(AllFiles, each Text.Contains([Name], "PERFILALUNOSIRMR") and Text.EndsWith([Name], ".csv")),
+				    WithParsed = Table.AddColumn(PerfisFiles, "Parsed", each
+				        let
+				            Nome = [Name],
+				            Partes = Text.Split(Nome, "_"),
+				            DatePart = List.First(List.Select(Partes, each Text.Length(_) = 10)),
+				            SnapDate = try Date.FromText(DatePart) otherwise null,
+				            CSV = Csv.Document([Content], [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				            Headers = Table.PromoteHeaders(CSV, [PromoteAllScalars=true]),
+				            WithDate = Table.AddColumn(Headers, "DataSnapshot", each SnapDate)
+				        in
+				            WithDate
+				    ),
+				    Combined = Table.Combine(WithParsed[Parsed]),
+				    ComStatus = Table.AddColumn(Combined, "Status", each
+				        let s = Text.Trim([#"Ativo ou inativo?"])
+				        in if s = "ATIVO" then "Ativo"
+				        else if Text.StartsWith(s, "AFAST") then "Afastado"
+				        else if s = "INATIVO" then "Inativo"
+				        else s
+				    ),
+				    ComFaixaRenda = Table.AddColumn(ComStatus, "FaixaRenda", each
+				        let r = Text.Trim([#"Renda familiar em salários mínimos:"])
+				        in if r = "1 Salário Mínimo" then "1 SM"
+				        else if r = "De 1 a 2 Salários Mínimos" then "1 a 2 SM"
+				        else if r = "De 2 a 3 Salários Mínimos" then "2 a 3 SM"
+				        else if r = "De 3 a 4 Salários Mínimos" then "3 a 4 SM"
+				        else if r = "De 4 a 5 Salários Mínimos" then "4 a 5 SM"
+				        else if r = "De 5 a 6 Salários Mínimos" then "5 a 6 SM"
+				        else if r = "De 6 a 7 Salários Mínimos" then "6 a 7 SM"
+				        else if r = "De 7 a 8 Salários Mínimos" then "7 a 8 SM"
+				        else if r = "De 8 a 9 Salários Mínimos" then "8 a 9 SM"
+				        else if r = "De 9 a 10 Salários Mínimos" then "9 a 10 SM"
+				        else if r = "Acima de 10 Salários Mínimos" then "Acima de 10 SM"
+				        else "Sem registro"
+				    ),
+				    ComFaixaRendaOrdem = Table.AddColumn(ComFaixaRenda, "FaixaRendaOrdem", each
+				        let r = [FaixaRenda]
+				        in if r = "1 SM" then 1 else if r = "1 a 2 SM" then 2
+				        else if r = "2 a 3 SM" then 3 else if r = "3 a 4 SM" then 4
+				        else if r = "4 a 5 SM" then 5 else if r = "5 a 6 SM" then 6
+				        else if r = "6 a 7 SM" then 7 else if r = "7 a 8 SM" then 8
+				        else if r = "8 a 9 SM" then 9 else if r = "9 a 10 SM" then 10
+				        else if r = "Acima de 10 SM" then 11 else 12
+				    ),
+				    ComRendaSM = Table.AddColumn(ComFaixaRendaOrdem, "RendaSM_Aprox", each
+				        let r = [FaixaRenda]
+				        in if r = "1 SM" then 1.0 else if r = "1 a 2 SM" then 1.5
+				        else if r = "2 a 3 SM" then 2.5 else if r = "3 a 4 SM" then 3.5
+				        else if r = "4 a 5 SM" then 4.5 else if r = "5 a 6 SM" then 5.5
+				        else if r = "6 a 7 SM" then 6.5 else if r = "7 a 8 SM" then 7.5
+				        else if r = "8 a 9 SM" then 8.5 else if r = "9 a 10 SM" then 9.5
+				        else if r = "Acima de 10 SM" then 12.0 else null
+				    ),
+				    ComInstituicao = Table.AddColumn(ComRendaSM, "TipoInstituicao", each
+				        let inst = Text.Trim([#"Instituição PÚBLICA ou PARTICULAR"])
+				        in if Text.Contains(inst, "PÚBLICO") then "Pública"
+				        else if Text.Contains(inst, "PARTICULAR") then "Particular"
+				        else "Sem registro"
+				    ),
+				    ComAnoEscolar = Table.AddColumn(ComInstituicao, "AnoEscolar", each
+				        let a = Text.Trim([#"Ano escolar que cursou ou está cursando:"])
+				        in if Text.Contains(a, "FUNDAMENTAL II") then "Fund. II"
+				        else if Text.Contains(a, "FUNDAMENTAL I") then "Fund. I"
+				        else if Text.Contains(a, "FUNDAMENTAL INCOMPLETO") then "Fund. incoml."
+				        else if a = "Cursando ENSINO MÉDIO" then "Médio (curs.)"
+				        else if a = "ENSINO MÉDIO INCOMPLETO" then "Médio incoml."
+				        else if a = "ENSINO MÉDIO COMPLETO" then "Médio compl."
+				        else if a = "ENSINO SUPERIOR INCOMPLETO" then "Superior incoml."
+				        else if a = "ENSINO SUPERIOR COMPLETO" then "Superior compl."
+				        else "Sem registro"
+				    ),
+				    ComAnoEscolarOrdem = Table.AddColumn(ComAnoEscolar, "AnoEscolarOrdem", each
+				        let a = [AnoEscolar]
+				        in if a = "Fund. I" then 1 else if a = "Fund. II" then 2
+				        else if a = "Fund. incoml." then 3 else if a = "Médio (curs.)" then 4
+				        else if a = "Médio incoml." then 5 else if a = "Médio compl." then 6
+				        else if a = "Superior incoml." then 7 else if a = "Superior compl." then 8
+				        else 9
+				    ),
+				    ComFaixaEtaria = Table.AddColumn(ComAnoEscolarOrdem, "FaixaEtaria", each
+				        let idade = try Number.From([#"Idade do aluno"]) otherwise null
+				        in if idade = null then "Sem registro"
+				        else if idade <= 12 then "0-12 anos"
+				        else if idade <= 17 then "13-17 anos"
+				        else if idade <= 25 then "18-25 anos"
+				        else if idade <= 39 then "26-39 anos"
+				        else "40+ anos"
+				    ),
+				    ComFaixaEtariaOrdem = Table.AddColumn(ComFaixaEtaria, "FaixaEtariaOrdem", each
+				        let f = [FaixaEtaria]
+				        in if f = "0-12 anos" then 1 else if f = "13-17 anos" then 2
+				        else if f = "18-25 anos" then 3 else if f = "26-39 anos" then 4
+				        else if f = "40+ anos" then 5 else 6
+				    ),
+				    ComDefFisica = Table.AddColumn(ComFaixaEtariaOrdem, "DeficienciaFisica", each
+				        [#"O aluno tem diagnóstico de alguma doença? (choice=Deficiência Física)"] = "Checked"
+				    ),
+				    ComDefInt = Table.AddColumn(ComDefFisica, "DeficienciaIntelectual", each
+				        [#"O aluno tem diagnóstico de alguma doença? (choice=Deficiência Intelectual)"] = "Checked"
+				    ),
+				    ComSemDef = Table.AddColumn(ComDefInt, "SemDeficiencia", each
+				        [#"O aluno tem diagnóstico de alguma doença? (choice=Sem deficiência)"] = "Checked"
+				    ),
+				    ComDiagDif = Table.AddColumn(ComSemDef, "DiagnosticoDiferenciado", each
+				        [#"O aluno tem diagnóstico de alguma doença? (choice=Diagnóstico diferenciado)"] = "Checked"
+				    ),
+				    ComTipoDeficiencia = Table.AddColumn(ComDiagDif, "TipoDeficiencia", each
+				        if [SemDeficiencia] then "Sem Deficiência"
+				        else if [DeficienciaFisica] then "Deficiência Física"
+				        else if [DeficienciaIntelectual] then "Deficiência Intelectual"
+				        else if [DiagnosticoDiferenciado] then "Diagnóstico Diferenciado"
+				        else "Sem registro"
+				    ),
+				    ComDoenca = Table.AddColumn(ComTipoDeficiencia, "DoencaEspecifica", each
+				        let d = Text.Upper(Text.Trim([#"Qual doença?"]))
+				        in if d = "" or d = "SEM DEFICIÊNCIA" then "Sem Deficiência"
+				        else if d = "LEGG-CALVE-PERTHES" then "Legg-Calvé-Perthes"
+				        else if d = "MIELOMENINGOCELE" or d = "MENINGOMIELOCELE" then "Mielomeningocele"
+				        else if Text.StartsWith(d, "PARALISIA CEREBRAL") then "Paralisia Cerebral"
+				        else if Text.Contains(d, "SÍNDROME DE DOWN") or Text.Contains(d, "SINDROME DE DOWN") then "Síndrome de Down"
+				        else if Text.StartsWith(d, "TRANSTORNO DO ESPECTRO AUTISTA") then "TEA"
+				        else if d = "DEFICIÊNCIA INTELECTUAL" or d = "REBAIXAMENTO INTELECTUAL BAIXO" then "Def. Intelectual"
+				        else Text.Proper(d)
+				    ),
+				    ComCor = Table.AddColumn(ComDoenca, "CorLimpa", each
+				        if Text.Trim([Cor]) = "" then "Sem registro" else Text.Trim([Cor])
+				    ),
+				    Selecionado = Table.SelectColumns(ComCor, {
+				        "Record ID", "NOME DO ALUNO", "Status", "Sexo", "CorLimpa", "Idade do aluno",
+				        "FaixaEtaria", "FaixaEtariaOrdem",
+				        "FaixaRenda", "FaixaRendaOrdem", "RendaSM_Aprox",
+				        "TipoInstituicao", "AnoEscolar", "AnoEscolarOrdem",
+				        "DeficienciaFisica", "DeficienciaIntelectual", "SemDeficiencia", "DiagnosticoDiferenciado",
+				        "TipoDeficiencia", "DoencaEspecifica", "DataSnapshot"
+				    }),
+				    Renomeado = Table.RenameColumns(Selecionado, {
+				        {"Record ID", "RecordID"},
+				        {"NOME DO ALUNO", "NomeAluno"},
+				        {"Idade do aluno", "Idade"},
+				        {"CorLimpa", "Cor"}
+				    }),
+				    Tipado = Table.TransformColumnTypes(Renomeado, {
 				        {"RecordID", Int64.Type},
 				        {"NomeAluno", type text},
 				        {"Status", type text},
@@ -127,18 +270,17 @@ table Alunos
 				        {"FaixaRendaOrdem", Int64.Type},
 				        {"RendaSM_Aprox", type number},
 				        {"TipoInstituicao", type text},
-				        {"NivelEnsino", type text},
 				        {"AnoEscolar", type text},
 				        {"AnoEscolarOrdem", Int64.Type},
 				        {"DeficienciaFisica", type logical},
 				        {"DeficienciaIntelectual", type logical},
 				        {"SemDeficiencia", type logical},
 				        {"DiagnosticoDiferenciado", type logical},
-				        {"DiagnosticoPrincipal", type text},
-				        {"DiagnosticoAgrupado", type text}
+				        {"TipoDeficiencia", type text},
+				        {"DoencaEspecifica", type text},
+				        {"DataSnapshot", type date}
 				    })
 				in
-				    #"Changed Types"
+				    Tipado
 
 	annotation PBI_ResultType = Table
-

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "addeb4456753437b902f",
+  "position": {
+    "x": 5,
+    "y": 505,
+    "z": 15,
+    "height": 90,
+    "width": 148,
+    "tabOrder": 14
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alunos"
+                    }
+                  },
+                  "Property": "Cor"
+                }
+              },
+              "queryRef": "Alunos.Cor",
+              "nativeQueryRef": "Cor",
+              "active": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}

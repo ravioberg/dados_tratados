@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "4a3cee419e3840028734",
+  "position": {
+    "x": 158,
+    "y": 5,
+    "z": 1,
+    "height": 38,
+    "width": 1112,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Perfil Socioeconômico dos Alunos — IRMR",
+                    "textStyle": {
+                      "fontSize": "20px",
+                      "color": "#0D47A1",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

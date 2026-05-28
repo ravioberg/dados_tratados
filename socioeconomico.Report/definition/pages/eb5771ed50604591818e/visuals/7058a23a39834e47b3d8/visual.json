@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "7058a23a39834e47b3d8",
+  "position": {
+    "x": 618,
+    "y": 70,
+    "z": 10,
+    "height": 85,
+    "width": 220,
+    "tabOrder": 9
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "PctDeficienciaIntelectual"
+                }
+              },
+              "queryRef": "_Medidas.PctDeficienciaIntelectual",
+              "nativeQueryRef": "PctDeficienciaIntelectual"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

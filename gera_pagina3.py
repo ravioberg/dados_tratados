@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Gera Pagina 2 (Perfil Socioeconomico) no PBIP - formato schema 2.9.0 correto.
+Gera Pagina 3 (Deficiencias e Diagnosticos) no PBIP - formato schema 2.9.0.
 Executa com PBI Desktop FECHADO.
 """
 import uuid, json
@@ -64,6 +64,18 @@ def col_chart(cat_tbl, cat_col, msr_tbl, msr):
         }}
     }
 
+def bar_chart(cat_tbl, cat_col, msr_tbl, msr):
+    """Gráfico de barras horizontal (barChart) — ideal para muitas categorias."""
+    return {
+        "visualType": "barChart",
+        "query": {"queryState": {
+            "Category": {"projections": [proj(col_field(cat_tbl, cat_col),
+                                              f"{cat_tbl}.{cat_col}", cat_col, active=True)]},
+            "Y":        {"projections": [proj(msr_field(msr_tbl, msr),
+                                              f"{msr_tbl}.{msr}", msr)]}
+        }}
+    }
+
 def donut(cat_tbl, cat_col, msr_tbl, msr):
     return {
         "visualType": "donutChart",
@@ -99,69 +111,75 @@ def slicer(tbl, col):
 
 # ── Visuais: (x, y, z, w, h, tab, conteudo) ──────────────────────────────────
 # Layout: 1280 × 720  |  sidebar esquerda x=5 w=148  |  conteúdo x=158 w=1112
+#
+# Estrutura:
+#   Topo      : título + subtítulo
+#   Linha 2   : 3 cards (esq) + donut TipoDeficiencia (dir, alto)
+#   Linha 3   : barra horizontal top doenças (esq) + donut continua (dir)
+#   Linha 4   : empilhado FaixaEtaria×Deficiência + empilhado FaixaRenda×Deficiência
 
 VISUALS = [
-    # ── Cabeçalho ──
-    (158,   5,  1, 1112,  38,  0,
-     textbox("Perfil Socioeconômico dos Alunos — IRMR", bold=True, size=20, color="#0D47A1")),
-
-    (158,  45,  2, 1112,  26,  1,
-     textbox("Distribuição por renda, instituição e escolaridade", size=11, color="#616161")),
-
-    # ── Cards ──
-    (158,  80,  3,  220,  85,  2,
-     card("_Medidas", "AlunosBaixaRenda")),
-
-    (388,  80,  4,  220,  85,  3,
-     card("_Medidas", "PctBaixaRenda")),
-
-    (618,  80,  5,  220,  85,  4,
-     card("_Medidas", "PctEscolaPublica")),
-
-    # ── Gráficos principais ──
-    (158, 174,  6,  580, 198,  5,
-     col_chart("Alunos", "FaixaRenda", "_Medidas", "TotalAlunos")),
-
-    (748, 174,  7,  522, 198,  6,
-     donut("Alunos", "TipoInstituicao", "_Medidas", "TotalAlunos")),
-
-    (158, 380,  8, 1112, 152,  7,
-     stacked("Alunos", "FaixaRenda", "TipoInstituicao", "_Medidas", "TotalAlunos")),
-
-    # ── Gráficos inferiores ──
-    (158, 540,  9,  546, 172,  8,
-     col_chart("Alunos", "AnoEscolar", "_Medidas", "TotalAlunos")),
-
-    (714, 540, 10,  556, 172,  9,
-     stacked("Alunos", "FaixaEtaria", "TipoInstituicao", "_Medidas", "TotalAlunos")),
-
     # ── Slicers (sidebar esquerda) ──
-    (  5,  80, 11,  148, 140, 10,
-     slicer("Alunos", "FaixaRenda")),
+    (  5,  70,  1,  148, 130,  0,
+     slicer("Alunos", "TipoDeficiencia")),
 
-    (  5, 225, 12,  148,  85, 11,
-     slicer("Alunos", "TipoInstituicao")),
-
-    (  5, 315, 13,  148, 105, 12,
-     slicer("Alunos", "FaixaEtaria")),
-
-    (  5, 425, 14,  148,  75, 13,
+    (  5, 205,  2,  148,  80,  1,
      slicer("Alunos", "Sexo")),
 
-    (  5, 505, 15,  148,  90, 14,
+    (  5, 290,  3,  148,  90,  2,
      slicer("Alunos", "Cor")),
 
-    (  5, 600, 16,  148,  80, 15,
+    (  5, 385,  4,  148, 155,  3,
+     slicer("Alunos", "FaixaRenda")),
+
+    (  5, 545,  5,  148,  80,  4,
      slicer("Alunos", "Status")),
+
+    # ── Cabeçalho ──
+    (158,   5,  6, 1112,  38,  5,
+     textbox("Deficiências e Diagnósticos — IRMR", bold=True, size=20, color="#0D47A1")),
+
+    (158,  45,  7, 1112,  20,  6,
+     textbox("Distribuição por tipo de deficiência e diagnóstico específico", size=11, color="#616161")),
+
+    # ── Cards ──
+    (158,  70,  8,  220,  85,  7,
+     card("_Medidas", "TotalComDeficiencia")),
+
+    (388,  70,  9,  220,  85,  8,
+     card("_Medidas", "PctDeficienciaFisica")),
+
+    (618,  70, 10,  220,  85,  9,
+     card("_Medidas", "PctDeficienciaIntelectual")),
+
+    # ── Donut TipoDeficiencia (direita, alto — cobre linhas 2 e 3) ──
+    (848,  70, 11,  422, 360, 10,
+     donut("Alunos", "TipoDeficiencia", "_Medidas", "TotalAlunos")),
+
+    # ── Barras horizontais: top diagnósticos específicos ──
+    (158, 165, 12,  680, 265, 11,
+     bar_chart("Alunos", "DoencaEspecifica", "_Medidas", "TotalAlunos")),
+
+    # ── Gráficos empilhados (linha inferior) ──
+    (158, 440, 13,  550, 258, 12,
+     stacked("Alunos", "FaixaEtaria", "TipoDeficiencia", "_Medidas", "TotalAlunos")),
+
+    (718, 440, 14,  552, 258, 13,
+     stacked("Alunos", "FaixaRenda", "TipoDeficiencia", "_Medidas", "TotalAlunos")),
 ]
 
-# ── Remover página anterior, criar nova ───────────────────────────────────────
+# ── Adicionar página ao report (sem remover outras) ───────────────────────────
 
 pages = json.loads(PAGES_JSON.read_text(encoding="utf-8"))
 
-KEEP_PAGES = set()   # páginas fixas a preservar (vazio = regenera tudo)
-for page_id in list(pages.get("pageOrder", [])):
-    if page_id not in KEEP_PAGES:
+# Remove apenas páginas anteriores da Página 3 (mantém Página 2 intacta)
+# Para identificar: guarda o ID atual da Página 2 antes de rodar este script
+# e não o inclui na lista a remover. Por segurança, remove apenas IDs que
+# não sejam o último da lista (que é sempre a Pág 2 gerada por gera_pagina2.py).
+if len(pages.get("pageOrder", [])) > 1:
+    # mantém só o primeiro ID (Página 2), remove o resto (Página 3 anteriores)
+    pag2_id = pages["pageOrder"][0]
+    for page_id in list(pages["pageOrder"][1:]):
         pages["pageOrder"].remove(page_id)
         print(f"Removida do pageOrder: {page_id}")
 
@@ -173,7 +191,7 @@ VIS_DIR.mkdir(parents=True)
 (PAGE_DIR / "page.json").write_text(json.dumps({
     "$schema": PAGE_SCHEMA,
     "name": PAGE_ID,
-    "displayName": "Perfil Socioeconômico",
+    "displayName": "Deficiências e Diagnósticos",
     "displayOption": "FitToPage",
     "height": 720,
     "width": 1280

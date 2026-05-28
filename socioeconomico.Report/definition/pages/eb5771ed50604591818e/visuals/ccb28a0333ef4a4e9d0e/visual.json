@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "ccb28a0333ef4a4e9d0e",
+  "position": {
+    "x": 158,
+    "y": 5,
+    "z": 6,
+    "height": 38,
+    "width": 1112,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Deficiências e Diagnósticos — IRMR",
+                    "textStyle": {
+                      "fontSize": "20px",
+                      "color": "#0D47A1",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "63cc21fff1b544e9b144",
+  "position": {
+    "x": 5,
+    "y": 70,
+    "z": 1,
+    "height": 130,
+    "width": 148,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alunos"
+                    }
+                  },
+                  "Property": "TipoDeficiencia"
+                }
+              },
+              "queryRef": "Alunos.TipoDeficiencia",
+              "nativeQueryRef": "TipoDeficiencia",
+              "active": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}

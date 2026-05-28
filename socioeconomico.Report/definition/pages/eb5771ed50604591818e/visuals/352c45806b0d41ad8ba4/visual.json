@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "352c45806b0d41ad8ba4",
+  "position": {
+    "x": 5,
+    "y": 205,
+    "z": 2,
+    "height": 80,
+    "width": 148,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alunos"
+                    }
+                  },
+                  "Property": "Sexo"
+                }
+              },
+              "queryRef": "Alunos.Sexo",
+              "nativeQueryRef": "Sexo",
+              "active": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}

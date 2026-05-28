@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Injeta tabelas Alunos e _Medidas no SemanticModel do PBIP socioeconomico.
+Gera arquivos TMDL para o modelo semântico.
+Fonte: pasta com arquivos PERFILALUNOSIRMR (suporte a múltiplos meses futuros).
+Todo tratamento é feito dentro do Power Query M — sem CSV intermediário.
 Executa com PBI Desktop FECHADO.
 """
 import uuid
@@ -11,46 +13,224 @@ SM_DEF     = BASE / "socioeconomico.SemanticModel" / "definition"
 TABLES_DIR = SM_DEF / "tables"
 TABLES_DIR.mkdir(parents=True, exist_ok=True)
 
-CSV_PATH = str(BASE / "alunos_perfil_limpo.csv")
-
 def uid():
     return str(uuid.uuid4())
 
-# ─── Alunos.tmdl ─────────────────────────────────────────────────────────────
+# ─── M Query template (___FOLDER___ será substituído pelo caminho real) ────────
+
+M_TEMPLATE = """let
+    FolderPath = "___FOLDER___",
+    AllFiles = Folder.Files(FolderPath),
+    PerfisFiles = Table.SelectRows(AllFiles, each Text.Contains([Name], "PERFILALUNOSIRMR") and Text.EndsWith([Name], ".csv")),
+    WithParsed = Table.AddColumn(PerfisFiles, "Parsed", each
+        let
+            Nome = [Name],
+            Partes = Text.Split(Nome, "_"),
+            DatePart = List.First(List.Select(Partes, each Text.Length(_) = 10)),
+            SnapDate = try Date.FromText(DatePart) otherwise null,
+            CSV = Csv.Document([Content], [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+            Headers = Table.PromoteHeaders(CSV, [PromoteAllScalars=true]),
+            WithDate = Table.AddColumn(Headers, "DataSnapshot", each SnapDate)
+        in
+            WithDate
+    ),
+    Combined = Table.Combine(WithParsed[Parsed]),
+    ComStatus = Table.AddColumn(Combined, "Status", each
+        let s = Text.Trim([#"Ativo ou inativo?"])
+        in if s = "ATIVO" then "Ativo"
+        else if Text.StartsWith(s, "AFAST") then "Afastado"
+        else if s = "INATIVO" then "Inativo"
+        else s
+    ),
+    ComFaixaRenda = Table.AddColumn(ComStatus, "FaixaRenda", each
+        let r = Text.Trim([#"Renda familiar em salários mínimos:"])
+        in if r = "1 Salário Mínimo" then "1 SM"
+        else if r = "De 1 a 2 Salários Mínimos" then "1 a 2 SM"
+        else if r = "De 2 a 3 Salários Mínimos" then "2 a 3 SM"
+        else if r = "De 3 a 4 Salários Mínimos" then "3 a 4 SM"
+        else if r = "De 4 a 5 Salários Mínimos" then "4 a 5 SM"
+        else if r = "De 5 a 6 Salários Mínimos" then "5 a 6 SM"
+        else if r = "De 6 a 7 Salários Mínimos" then "6 a 7 SM"
+        else if r = "De 7 a 8 Salários Mínimos" then "7 a 8 SM"
+        else if r = "De 8 a 9 Salários Mínimos" then "8 a 9 SM"
+        else if r = "De 9 a 10 Salários Mínimos" then "9 a 10 SM"
+        else if r = "Acima de 10 Salários Mínimos" then "Acima de 10 SM"
+        else "Sem registro"
+    ),
+    ComFaixaRendaOrdem = Table.AddColumn(ComFaixaRenda, "FaixaRendaOrdem", each
+        let r = [FaixaRenda]
+        in if r = "1 SM" then 1 else if r = "1 a 2 SM" then 2
+        else if r = "2 a 3 SM" then 3 else if r = "3 a 4 SM" then 4
+        else if r = "4 a 5 SM" then 5 else if r = "5 a 6 SM" then 6
+        else if r = "6 a 7 SM" then 7 else if r = "7 a 8 SM" then 8
+        else if r = "8 a 9 SM" then 9 else if r = "9 a 10 SM" then 10
+        else if r = "Acima de 10 SM" then 11 else 12
+    ),
+    ComRendaSM = Table.AddColumn(ComFaixaRendaOrdem, "RendaSM_Aprox", each
+        let r = [FaixaRenda]
+        in if r = "1 SM" then 1.0 else if r = "1 a 2 SM" then 1.5
+        else if r = "2 a 3 SM" then 2.5 else if r = "3 a 4 SM" then 3.5
+        else if r = "4 a 5 SM" then 4.5 else if r = "5 a 6 SM" then 5.5
+        else if r = "6 a 7 SM" then 6.5 else if r = "7 a 8 SM" then 7.5
+        else if r = "8 a 9 SM" then 8.5 else if r = "9 a 10 SM" then 9.5
+        else if r = "Acima de 10 SM" then 12.0 else null
+    ),
+    ComInstituicao = Table.AddColumn(ComRendaSM, "TipoInstituicao", each
+        let inst = Text.Trim([#"Instituição PÚBLICA ou PARTICULAR"])
+        in if Text.Contains(inst, "PÚBLICO") then "Pública"
+        else if Text.Contains(inst, "PARTICULAR") then "Particular"
+        else "Sem registro"
+    ),
+    ComAnoEscolar = Table.AddColumn(ComInstituicao, "AnoEscolar", each
+        let a = Text.Trim([#"Ano escolar que cursou ou está cursando:"])
+        in if Text.Contains(a, "FUNDAMENTAL II") then "Fund. II"
+        else if Text.Contains(a, "FUNDAMENTAL I") then "Fund. I"
+        else if Text.Contains(a, "FUNDAMENTAL INCOMPLETO") then "Fund. incoml."
+        else if a = "Cursando ENSINO MÉDIO" then "Médio (curs.)"
+        else if a = "ENSINO MÉDIO INCOMPLETO" then "Médio incoml."
+        else if a = "ENSINO MÉDIO COMPLETO" then "Médio compl."
+        else if a = "ENSINO SUPERIOR INCOMPLETO" then "Superior incoml."
+        else if a = "ENSINO SUPERIOR COMPLETO" then "Superior compl."
+        else "Sem registro"
+    ),
+    ComAnoEscolarOrdem = Table.AddColumn(ComAnoEscolar, "AnoEscolarOrdem", each
+        let a = [AnoEscolar]
+        in if a = "Fund. I" then 1 else if a = "Fund. II" then 2
+        else if a = "Fund. incoml." then 3 else if a = "Médio (curs.)" then 4
+        else if a = "Médio incoml." then 5 else if a = "Médio compl." then 6
+        else if a = "Superior incoml." then 7 else if a = "Superior compl." then 8
+        else 9
+    ),
+    ComFaixaEtaria = Table.AddColumn(ComAnoEscolarOrdem, "FaixaEtaria", each
+        let idade = try Number.From([#"Idade do aluno"]) otherwise null
+        in if idade = null then "Sem registro"
+        else if idade <= 12 then "0-12 anos"
+        else if idade <= 17 then "13-17 anos"
+        else if idade <= 25 then "18-25 anos"
+        else if idade <= 39 then "26-39 anos"
+        else "40+ anos"
+    ),
+    ComFaixaEtariaOrdem = Table.AddColumn(ComFaixaEtaria, "FaixaEtariaOrdem", each
+        let f = [FaixaEtaria]
+        in if f = "0-12 anos" then 1 else if f = "13-17 anos" then 2
+        else if f = "18-25 anos" then 3 else if f = "26-39 anos" then 4
+        else if f = "40+ anos" then 5 else 6
+    ),
+    ComDefFisica = Table.AddColumn(ComFaixaEtariaOrdem, "DeficienciaFisica", each
+        [#"O aluno tem diagnóstico de alguma doença? (choice=Deficiência Física)"] = "Checked"
+    ),
+    ComDefInt = Table.AddColumn(ComDefFisica, "DeficienciaIntelectual", each
+        [#"O aluno tem diagnóstico de alguma doença? (choice=Deficiência Intelectual)"] = "Checked"
+    ),
+    ComSemDef = Table.AddColumn(ComDefInt, "SemDeficiencia", each
+        [#"O aluno tem diagnóstico de alguma doença? (choice=Sem deficiência)"] = "Checked"
+    ),
+    ComDiagDif = Table.AddColumn(ComSemDef, "DiagnosticoDiferenciado", each
+        [#"O aluno tem diagnóstico de alguma doença? (choice=Diagnóstico diferenciado)"] = "Checked"
+    ),
+    ComTipoDeficiencia = Table.AddColumn(ComDiagDif, "TipoDeficiencia", each
+        if [SemDeficiencia] then "Sem Deficiência"
+        else if [DeficienciaFisica] then "Deficiência Física"
+        else if [DeficienciaIntelectual] then "Deficiência Intelectual"
+        else if [DiagnosticoDiferenciado] then "Diagnóstico Diferenciado"
+        else "Sem registro"
+    ),
+    ComDoenca = Table.AddColumn(ComTipoDeficiencia, "DoencaEspecifica", each
+        let d = Text.Upper(Text.Trim([#"Qual doença?"]))
+        in if d = "" or d = "SEM DEFICIÊNCIA" then "Sem Deficiência"
+        else if d = "LEGG-CALVE-PERTHES" then "Legg-Calvé-Perthes"
+        else if d = "MIELOMENINGOCELE" or d = "MENINGOMIELOCELE" then "Mielomeningocele"
+        else if Text.StartsWith(d, "PARALISIA CEREBRAL") then "Paralisia Cerebral"
+        else if Text.Contains(d, "SÍNDROME DE DOWN") or Text.Contains(d, "SINDROME DE DOWN") then "Síndrome de Down"
+        else if Text.StartsWith(d, "TRANSTORNO DO ESPECTRO AUTISTA") then "TEA"
+        else if d = "DEFICIÊNCIA INTELECTUAL" or d = "REBAIXAMENTO INTELECTUAL BAIXO" then "Def. Intelectual"
+        else Text.Proper(d)
+    ),
+    ComCor = Table.AddColumn(ComDoenca, "CorLimpa", each
+        if Text.Trim([Cor]) = "" then "Sem registro" else Text.Trim([Cor])
+    ),
+    Selecionado = Table.SelectColumns(ComCor, {
+        "Record ID", "NOME DO ALUNO", "Status", "Sexo", "CorLimpa", "Idade do aluno",
+        "FaixaEtaria", "FaixaEtariaOrdem",
+        "FaixaRenda", "FaixaRendaOrdem", "RendaSM_Aprox",
+        "TipoInstituicao", "AnoEscolar", "AnoEscolarOrdem",
+        "DeficienciaFisica", "DeficienciaIntelectual", "SemDeficiencia", "DiagnosticoDiferenciado",
+        "TipoDeficiencia", "DoencaEspecifica", "DataSnapshot"
+    }),
+    Renomeado = Table.RenameColumns(Selecionado, {
+        {"Record ID", "RecordID"},
+        {"NOME DO ALUNO", "NomeAluno"},
+        {"Idade do aluno", "Idade"},
+        {"CorLimpa", "Cor"}
+    }),
+    Tipado = Table.TransformColumnTypes(Renomeado, {
+        {"RecordID", Int64.Type},
+        {"NomeAluno", type text},
+        {"Status", type text},
+        {"Sexo", type text},
+        {"Cor", type text},
+        {"Idade", Int64.Type},
+        {"FaixaEtaria", type text},
+        {"FaixaEtariaOrdem", Int64.Type},
+        {"FaixaRenda", type text},
+        {"FaixaRendaOrdem", Int64.Type},
+        {"RendaSM_Aprox", type number},
+        {"TipoInstituicao", type text},
+        {"AnoEscolar", type text},
+        {"AnoEscolarOrdem", Int64.Type},
+        {"DeficienciaFisica", type logical},
+        {"DeficienciaIntelectual", type logical},
+        {"SemDeficiencia", type logical},
+        {"DiagnosticoDiferenciado", type logical},
+        {"TipoDeficiencia", type text},
+        {"DoencaEspecifica", type text},
+        {"DataSnapshot", type date}
+    })
+in
+    Tipado"""
+
+# ─── Colunas da tabela Alunos ─────────────────────────────────────────────────
 
 COLUMNS = [
-    ("RecordID",               "int64",   {}),
-    ("NomeAluno",              "string",  {}),
-    ("Status",                 "string",  {}),
-    ("Sexo",                   "string",  {}),
-    ("Cor",                    "string",  {}),
-    ("Idade",                  "int64",   {}),
-    ("FaixaEtaria",            "string",  {}),
-    ("FaixaEtariaOrdem",       "int64",   {}),
-    ("FaixaRenda",             "string",  {"sortByColumn": "FaixaRendaOrdem"}),
-    ("FaixaRendaOrdem",        "int64",   {}),
-    ("RendaSM_Aprox",          "double",  {}),
-    ("TipoInstituicao",        "string",  {}),
-    ("NivelEnsino",            "string",  {}),
-    ("AnoEscolar",             "string",  {"sortByColumn": "AnoEscolarOrdem"}),
-    ("AnoEscolarOrdem",        "int64",   {}),
-    ("DeficienciaFisica",      "boolean", {}),
-    ("DeficienciaIntelectual", "boolean", {}),
-    ("SemDeficiencia",         "boolean", {}),
-    ("DiagnosticoDiferenciado","boolean", {}),
-    ("DiagnosticoPrincipal",   "string",  {}),
-    ("DiagnosticoAgrupado",    "string",  {}),
+    ("RecordID",               "int64",    {}),
+    ("NomeAluno",              "string",   {}),
+    ("Status",                 "string",   {}),
+    ("Sexo",                   "string",   {}),
+    ("Cor",                    "string",   {}),
+    ("Idade",                  "int64",    {}),
+    ("FaixaEtaria",            "string",   {"sortByColumn": "FaixaEtariaOrdem"}),
+    ("FaixaEtariaOrdem",       "int64",    {}),
+    ("FaixaRenda",             "string",   {"sortByColumn": "FaixaRendaOrdem"}),
+    ("FaixaRendaOrdem",        "int64",    {}),
+    ("RendaSM_Aprox",          "double",   {}),
+    ("TipoInstituicao",        "string",   {}),
+    ("AnoEscolar",             "string",   {"sortByColumn": "AnoEscolarOrdem"}),
+    ("AnoEscolarOrdem",        "int64",    {}),
+    ("DeficienciaFisica",      "boolean",  {}),
+    ("DeficienciaIntelectual", "boolean",  {}),
+    ("SemDeficiencia",         "boolean",  {}),
+    ("DiagnosticoDiferenciado","boolean",  {}),
+    ("TipoDeficiencia",        "string",   {}),
+    ("DoencaEspecifica",       "string",   {}),
+    ("DataSnapshot",           "dateTime", {}),
 ]
 
 def build_alunos():
     T  = "\t"
     TT = "\t\t"
+    indent = "\t\t\t\t"   # 4 tabs — nível do bloco M no TMDL
+
+    m_query = M_TEMPLATE.replace("___FOLDER___", str(BASE))
+    m_indented = "\n".join(
+        indent + line if line.strip() else ""
+        for line in m_query.splitlines()
+    )
+
     lines = [
-        f"table Alunos",
+        "table Alunos",
         f"{T}lineageTag: {uid()}",
         "",
     ]
-
     for col_name, dtype, props in COLUMNS:
         lines += [
             f"{T}column {col_name}",
@@ -62,39 +242,11 @@ def build_alunos():
             lines.append(f"{TT}sortByColumn: {props['sortByColumn']}")
         lines.append("")
 
-    # Partition M
     lines += [
         f"{T}partition Alunos = m",
         f"{TT}mode: import",
         f"{TT}source =",
-        f"{TT}\t\tlet",
-        f'{TT}\t\t    Source = Csv.Document(File.Contents("{CSV_PATH}"), [Delimiter=",", Columns=21, Encoding=65001, QuoteStyle=QuoteStyle.None]),',
-        f'{TT}\t\t    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),',
-        f'{TT}\t\t    #"Changed Types" = Table.TransformColumnTypes(#"Promoted Headers", {{',
-        f'{TT}\t\t        {{"RecordID", Int64.Type}},',
-        f'{TT}\t\t        {{"NomeAluno", type text}},',
-        f'{TT}\t\t        {{"Status", type text}},',
-        f'{TT}\t\t        {{"Sexo", type text}},',
-        f'{TT}\t\t        {{"Cor", type text}},',
-        f'{TT}\t\t        {{"Idade", Int64.Type}},',
-        f'{TT}\t\t        {{"FaixaEtaria", type text}},',
-        f'{TT}\t\t        {{"FaixaEtariaOrdem", Int64.Type}},',
-        f'{TT}\t\t        {{"FaixaRenda", type text}},',
-        f'{TT}\t\t        {{"FaixaRendaOrdem", Int64.Type}},',
-        f'{TT}\t\t        {{"RendaSM_Aprox", type number}},',
-        f'{TT}\t\t        {{"TipoInstituicao", type text}},',
-        f'{TT}\t\t        {{"NivelEnsino", type text}},',
-        f'{TT}\t\t        {{"AnoEscolar", type text}},',
-        f'{TT}\t\t        {{"AnoEscolarOrdem", Int64.Type}},',
-        f'{TT}\t\t        {{"DeficienciaFisica", type logical}},',
-        f'{TT}\t\t        {{"DeficienciaIntelectual", type logical}},',
-        f'{TT}\t\t        {{"SemDeficiencia", type logical}},',
-        f'{TT}\t\t        {{"DiagnosticoDiferenciado", type logical}},',
-        f'{TT}\t\t        {{"DiagnosticoPrincipal", type text}},',
-        f'{TT}\t\t        {{"DiagnosticoAgrupado", type text}}',
-        f'{TT}\t\t    }})',
-        f'{TT}\t\tin',
-        f'{TT}\t\t    #"Changed Types"',
+        m_indented,
         "",
         f"{T}annotation PBI_ResultType = Table",
         "",
@@ -102,9 +254,10 @@ def build_alunos():
     return "\n".join(lines)
 
 
-# ─── _Medidas.tmdl ────────────────────────────────────────────────────────────
+# ─── Medidas DAX ─────────────────────────────────────────────────────────────
 
 MEASURES = [
+    # Página 2 — Perfil Socioeconômico
     ("TotalAlunos",
      "COUNTROWS(Alunos)",
      "#,0"),
@@ -128,6 +281,17 @@ MEASURES = [
      "0.0%"),
     ("PctSobreTotal",
      "DIVIDE([TotalAlunos], CALCULATE([TotalAlunos], ALL(Alunos)))",
+     "0.0%"),
+
+    # Página 3 — Deficiências e Diagnósticos
+    ("TotalComDeficiencia",
+     'CALCULATE([TotalAlunos], Alunos[TipoDeficiencia] <> "Sem Deficiência")',
+     "#,0"),
+    ("PctDeficienciaFisica",
+     'DIVIDE(CALCULATE([TotalAlunos], Alunos[TipoDeficiencia] = "Deficiência Física"), [TotalAlunos])',
+     "0.0%"),
+    ("PctDeficienciaIntelectual",
+     'DIVIDE(CALCULATE([TotalAlunos], Alunos[TipoDeficiencia] = "Deficiência Intelectual"), [TotalAlunos])',
      "0.0%"),
 ]
 
@@ -161,14 +325,14 @@ def build_medidas():
 alunos_path  = TABLES_DIR / "Alunos.tmdl"
 medidas_path = TABLES_DIR / "_Medidas.tmdl"
 
-alunos_path.write_text(build_alunos(),  encoding="utf-8")
+alunos_path.write_text(build_alunos(),   encoding="utf-8")
 medidas_path.write_text(build_medidas(), encoding="utf-8")
 
 print(f"Criado: {alunos_path.relative_to(BASE)}")
 print(f"Criado: {medidas_path.relative_to(BASE)}")
 print()
-print("Colunas na tabela Alunos:", len(COLUMNS), "(TipoDeficiencia: adicionar manualmente no PBI)")
-print("Medidas em _Medidas:", len(MEASURES))
+print(f"Colunas Alunos : {len(COLUMNS)}")
+print(f"Medidas        : {len(MEASURES)}")
 print()
 print("Abra socioeconomico.pbip no Power BI Desktop.")
 print("Se pedir para atualizar dados, clique em Atualizar.")
